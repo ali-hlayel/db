@@ -2,10 +2,12 @@ package de.db.service;
 
 import de.db.domain.*;
 import de.db.dto.SectionView;
+import jakarta.xml.bind.JAXBException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +31,7 @@ class StationServiceTest {
     }
 
     @Test
-    void getWagensSections() {
+    void getWagensSections() throws JAXBException, IOException {
         Station station = createStation();
         when(xmlQueryService.getStationData("ABC")).thenReturn(station);
 

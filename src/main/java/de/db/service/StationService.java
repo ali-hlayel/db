@@ -2,9 +2,13 @@ package de.db.service;
 
 import de.db.domain.*;
 import de.db.dto.SectionView;
+import de.db.exception.StationError;
+import de.db.exception.StationException;
+import jakarta.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,8 +20,16 @@ public class StationService {
         this.xmlQueryService = xmlQueryService;
     }
 
-    public SectionView getWagensSections(String stationShortCode, int trainNumber, int waggonNumber) {
-        Station station = xmlQueryService.getStationData(stationShortCode);
+    public SectionView getWagensSections(String stationShortCode, int trainNumber, int waggonNumber) throws StationException {
+        Station station;
+        try {
+            station = xmlQueryService.getStationData(stationShortCode);
+        } catch (JAXBException e) {
+            throw new StationException(StationError.FILE_PROCESSING_ERROR);
+        } catch (IOException e) {
+            throw new StationException(StationError.IO_FILE_ERROR);
+        }
+
         return SectionView.builder()
                 .sections(station.getTracks().stream()
                         .flatMap(track -> track.getTrains().stream())
