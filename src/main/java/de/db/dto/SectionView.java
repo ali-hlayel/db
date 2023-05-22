@@ -1,6 +1,16 @@
 package de.db.dto;
 
-public interface SectionView {
+import lombok.Builder;
+import lombok.Data;
 
-    String getName();
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Data
+@Builder
+public class SectionView {
+
+    @Builder.Default
+    private Set<String> sections = new HashSet<>();
 }
