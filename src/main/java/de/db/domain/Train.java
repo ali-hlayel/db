@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Train {
+
     @XmlElementWrapper(name = "trainNumbers")
     @XmlElement(name = "trainNumber")
     private List<Integer> trainNumbers;

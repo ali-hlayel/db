@@ -10,7 +10,6 @@ import java.util.Set;
 @Data
 @Builder
 public class SectionView {
-
     @Builder.Default
     private Set<String> sections = new HashSet<>();
 }

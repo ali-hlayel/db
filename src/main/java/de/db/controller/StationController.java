@@ -21,7 +21,6 @@ public class StationController {
     public StationController(StationService stationService) {
         this.stationService = stationService;
     }
-
     @GetMapping("/station/{ril100}/train/{trainNumber}/waggon/{number}")
     @ExceptionHandler(value = {ResponseStatusException.class})
     public ResponseEntity<?> getStation(@PathVariable String ril100, @PathVariable int trainNumber, @PathVariable int number) {

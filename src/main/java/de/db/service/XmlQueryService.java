@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 public class XmlQueryService {
 
     private final static String STATION = "stations";
-
     public Station getStationData(String stationShortCode) throws JAXBException, IOException {
 
         JAXBContext jaxbContext = JAXBContext.newInstance(Station.class);

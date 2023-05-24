@@ -36,5 +36,4 @@ public class Waggon {
 
     @XmlElement(name = "length")
     private int length;
-
 }

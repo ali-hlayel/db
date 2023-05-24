@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Section {
+
     @XmlElement(name = "identifier")
     private String identifier;
 }
