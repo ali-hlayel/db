@@ -1,25 +1,30 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@XmlRootElement(name = "station")
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "station")
 public class Station {
 
-    @XmlElement(name = "shortcode")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "shortcode")
     private String shortcode;
 
-    @XmlElement(name = "name")
+    @Column(name = "name")
     private String name;
 
-    @XmlElement(name = "validity")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "validity_id")
     private Validity validity;
 
-    @XmlElementWrapper(name = "tracks")
-    @XmlElement(name = "track")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "station_id")
     private List<Track> tracks;
 }

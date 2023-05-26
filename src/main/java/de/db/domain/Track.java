@@ -1,28 +1,31 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "track")
 public class Track {
 
-    @XmlElement(name = "name")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
     private String name;
 
-    @XmlElement(name = "number")
+    @Column(name = "number")
     private int number;
 
-    @XmlElementWrapper(name = "trains")
-    @XmlElement(name = "train")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "track_id")
     private List<Train> trains;
 
-    @XmlElementWrapper(name = "sections")
-    @XmlElement(name = "identifier")
+    @ElementCollection
+    @CollectionTable(name = "track_sections", joinColumns = @JoinColumn(name = "track_id"))
+    @Column(name = "section")
     private List<String> sections;
 }

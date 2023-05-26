@@ -1,6 +1,6 @@
 package de.db.service;
 
-import de.db.domain.Station;
+import de.db.entityXml.StationXml;
 import de.db.exception.StationError;
 import de.db.exception.StationException;
 import jakarta.xml.bind.JAXBContext;
@@ -20,16 +20,16 @@ import java.util.stream.Stream;
 public class XmlQueryService {
 
     private final static String STATION = "stations";
-    public Station getStationData(String stationShortCode) throws JAXBException, IOException {
+    public StationXml getStationData(String stationShortCode) throws JAXBException, IOException {
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(Station.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(StationXml.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         File directory = new ClassPathResource(STATION).getFile();
 
         Optional<File> xmlFile = findXmlFile(directory, stationShortCode);
         if (xmlFile.isPresent()) {
             File resourceFile = xmlFile.get();
-            return (Station) unmarshaller.unmarshal(resourceFile);
+            return (StationXml) unmarshaller.unmarshal(resourceFile);
         } else {
             throw new StationException(StationError.STATION_NOT_FOUND);
         }

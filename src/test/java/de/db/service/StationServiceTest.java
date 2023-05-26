@@ -1,19 +1,19 @@
 package de.db.service;
 
-import de.db.domain.*;
+import de.db.domain.repository.StationRepository;
 import de.db.dto.SectionView;
+import de.db.entityXml.*;
 import jakarta.xml.bind.JAXBException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,15 +24,18 @@ class StationServiceTest {
 
     private XmlQueryService xmlQueryService;
 
+    private StationRepository stationRepository;
+
     @BeforeEach
     public void setUp() {
         xmlQueryService = mock(XmlQueryService.class);
-        stationService = new StationService(xmlQueryService);
+        stationRepository = mock(StationRepository.class);
+        stationService = new StationService(xmlQueryService, stationRepository);
     }
 
     @Test
     void getWagensSections() throws JAXBException, IOException {
-        Station station = createStation();
+        StationXml station = createStation();
         when(xmlQueryService.getStationData("ABC")).thenReturn(station);
 
         SectionView expectedSections = SectionView.builder().sections(Set.of("A", "B")).build();
@@ -41,17 +44,17 @@ class StationServiceTest {
         assertEquals(expectedSections, result);
     }
 
-    private Station createStation() {
-        Station station = new Station();
-        Track track1 = new Track();
-        Track track2 = new Track();
-        Train train1 = new Train();
-        Train train2 = new Train();
-        Waggon waggon1 = new Waggon();
-        Waggon waggon2 = new Waggon();
-        Section section1 = new Section();
-        Section section2 = new Section();
-        Section section3 = new Section();
+    private StationXml createStation() {
+        StationXml station = new StationXml();
+        TrackXml track1 = new TrackXml();
+        TrackXml track2 = new TrackXml();
+        TrainXml train1 = new TrainXml();
+        TrainXml train2 = new TrainXml();
+        WaggonXml waggon1 = new WaggonXml();
+        WaggonXml waggon2 = new WaggonXml();
+        SectionXml section1 = new SectionXml();
+        SectionXml section2 = new SectionXml();
+        SectionXml section3 = new SectionXml();
 
         section1.setIdentifier("A");
         section2.setIdentifier("B");

@@ -1,21 +1,24 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "destination")
 public class Destination {
 
-    @XmlElement(name = "destinationName")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "destination_name")
     private String destinationName;
 
-    @XmlElementWrapper(name = "destinationVia")
-    @XmlElement(name = "item")
+    @ElementCollection
+    @CollectionTable(name = "destination_via", joinColumns = @JoinColumn(name = "destination_id"))
+    @Column(name = "via")
     private List<String> destinationVia;
 }

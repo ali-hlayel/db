@@ -40,14 +40,14 @@ class StationControllerTest {
     public void getStation_WithValidData_ReturnsOk() throws Exception {
         SectionView expectedSectionView = SectionView.builder().sections(Set.of("A")).build();
         when(stationService.getWagensSections("ABC", 12, 12)).thenReturn(expectedSectionView);
-        this.mockMvc.perform(get("/station/ABC/train/12/waggon/12"))
+        this.mockMvc.perform(get("/v1/station/ABC/train/12/waggon/12"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getStation_With_Station_Exception() throws Exception {
         when(stationService.getWagensSections("ABC", 12, 12)).thenThrow(StationException.class);
-        this.mockMvc.perform(get("/station/ABC/train/12/waggon/12"))
+        this.mockMvc.perform(get("/v1/station/ABC/train/12/waggon/12"))
                 .andExpect(status().isNotFound());
     }
 }

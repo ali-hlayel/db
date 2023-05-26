@@ -1,42 +1,46 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "train")
 public class Train {
 
-    @XmlElementWrapper(name = "trainNumbers")
-    @XmlElement(name = "trainNumber")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ElementCollection
+    @CollectionTable(name = "train_train_numbers", joinColumns = @JoinColumn(name = "train_id"))
+    @Column(name = "train_number")
     private List<Integer> trainNumbers;
 
-    @XmlElement(name = "anno")
+    @Column(name = "anno")
     private String anno;
 
-    @XmlElement(name = "time")
+    @Column(name = "time")
     private String time;
 
-    @XmlElement(name = "additionalText")
+    @Column(name = "additional_text", length = 500)
     private String additionalText;
 
-    @XmlElement(name = "name")
+    @Column(name = "name")
     private String name;
 
-    @XmlElementWrapper(name = "subtrains")
-    @XmlElement(name = "subtrain")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "train_id")
     private List<Subtrain> subtrains;
 
-    @XmlElementWrapper(name = "waggons")
-    @XmlElement(name = "waggon")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "train_id")
     private List<Waggon> waggons;
 
-    @XmlElementWrapper(name = "traintypes")
-    @XmlElement(name = "traintype")
+    @ElementCollection
+    @CollectionTable(name = "train_traintypes", joinColumns = @JoinColumn(name = "train_id"))
+    @Column(name = "traintype")
     private List<String> traintypes;
 }

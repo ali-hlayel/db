@@ -1,39 +1,41 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "waggon")
 public class Waggon {
 
-    @XmlElement(name = "position")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "position")
     private int position;
 
-    @XmlElement(name = "isWaggon")
+    @Column(name = "is_waggon")
     private int isWaggon;
 
-    @XmlElementWrapper(name = "sections")
-    @XmlElement(name = "identifier")
+    @ElementCollection
+    @CollectionTable(name = "waggon_sections", joinColumns = @JoinColumn(name = "waggon_id"))
+    @Column(name = "section")
     private List<String> sections;
 
-    @XmlElement(name = "number")
+    @Column(name = "number")
     private Integer number;
 
-    @XmlElement(name = "type")
+    @Column(name = "type")
     private String type;
 
-    @XmlElement(name = "symbols")
+    @Column(name = "symbols")
     private String symbols;
 
-    @XmlElement(name = "differentDestination")
+    @Column(name = "different_destination")
     private String differentDestination;
 
-    @XmlElement(name = "length")
-    private int length;
-}
+    @Column(name = "length")
+    private int length;}

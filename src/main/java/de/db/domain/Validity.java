@@ -1,17 +1,20 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "validity")
 public class Validity {
 
-    @XmlElement(name = "from")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "validity_from")
     private String from;
 
-    @XmlElement(name = "to")
+    @Column(name = "validity_to")
     private String to;
 }

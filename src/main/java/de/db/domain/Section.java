@@ -1,15 +1,16 @@
 package de.db.domain;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.persistence.*;
 import lombok.Data;
 
-
 @Data
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class Section {
 
-    @XmlElement(name = "identifier")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "identifier")
     private String identifier;
 }
