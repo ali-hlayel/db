@@ -36,11 +36,10 @@ public class StationController {
         }
         if (!result.getSections().isEmpty()) {
             long stopTime = System.nanoTime();
-            System.out.println("Time is: " + (stopTime-startTime));
+            log.info("The time needed for fetching the Info:" + (stopTime-startTime));
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(StationError.SECTION_NOT_FOUND.name(), HttpStatus.NOT_FOUND);
-
         }
     }
 
@@ -56,11 +55,10 @@ public class StationController {
         }
         if (!result.getSections().isEmpty()) {
             long stopTime = System.nanoTime();
-            System.out.println("Time is: " + (stopTime-startTime));
+            log.info("The time needed for fetching the Info:" + (stopTime-startTime));
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(StationError.SECTION_NOT_FOUND.name(), HttpStatus.NOT_FOUND);
-
         }
     }
 }

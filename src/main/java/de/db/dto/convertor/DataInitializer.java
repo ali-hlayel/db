@@ -15,6 +15,7 @@ import java.io.File;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class DataInitializer implements ApplicationRunner {
 
     private final ConvertFromXmlToEntity fromXmlToEntity;
@@ -42,6 +43,7 @@ public class DataInitializer implements ApplicationRunner {
         StationXml stationXml = (StationXml) unmarshaller.unmarshal(file);
         Station station = fromXmlToEntity.convertToStation(stationXml);
         System.out.println(station.getShortcode());
+        log.info("Station: " + station.getShortcode());
     }
 
 }
